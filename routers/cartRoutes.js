@@ -1,11 +1,15 @@
+//cart items model schema  Each cart item will have a name and quantity
 const CartItem = require('../models/cartItem');
+
+// Each cart will have the cart Item, the user and total Price
 const Cart = require('../models/cart')
+
 const express = require('express');
 const router = express.Router();
 
 
 
-
+// get all carts
 router.get('/', async (req,res)=>{
     const cartList = await Cart.find().populate('user');
     if(!cartList){
@@ -13,7 +17,7 @@ router.get('/', async (req,res)=>{
     }
     res.send(cartList);
 })
-
+//  get all carts  in database saved by id
 router.get('/:id', async (req, res)=>{
     const cart = await Cart.findById(req.params.id)
     .populate({path:'cartItem', populate:{path:'item',populate:'category'}})
@@ -36,6 +40,10 @@ router.get('/:id', async (req, res)=>{
 //     res.send(cart);
 
 // }
+
+
+
+// add cart to the database
 router.post('/', async (req, res)=>{
     const cartItemIds = Promise.all(req.body.cartItems.map(async (cartItem)=>{
         let newCartItem = new CartItem({
