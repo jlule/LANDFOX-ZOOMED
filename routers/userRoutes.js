@@ -1,6 +1,10 @@
+// Users schema  each user will have an email, 
+//password and whether they are an Admin or not
 const User = require('../models/users');
+
 const express = require('express');
 const router = express.Router();
+//encrypt passwords
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
